@@ -11,7 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix.typeScript('resources/js/app.ts', 'public/js')
+    .extract(['vue', 'lodash', 'axios', 'laravel-echo', 'bootstrap']).vue()
+    .sass('resources/css/app.scss', 'public/css');

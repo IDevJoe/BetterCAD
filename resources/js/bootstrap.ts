@@ -1,10 +1,11 @@
 import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
-import Vue from 'vue';
+import {createApp, App} from 'vue';
 import Axios, {AxiosInstance} from 'axios';
 import {RegisterAllComponents} from "./managers/ComponentManager";
-import VueRouter from 'vue-router';
+import {Router, createRouter, createWebHistory} from 'vue-router';
 import Routes from './routes';
+import Store from './store';
 
 import {LoDashStatic} from 'lodash';
 
@@ -14,7 +15,7 @@ declare global {
         axios: AxiosInstance,
         Pusher: Pusher,
         Echo: Echo,
-        App: Vue
+        App: App
     }
 }
 
@@ -29,6 +30,8 @@ window._ = require('lodash');
 window.axios = Axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.withCredentials = true;
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -46,13 +49,12 @@ window.Echo = new Echo({
     forceTLS: true
 });
 
-Vue.use(VueRouter);
-
-const router = new VueRouter({routes: Routes});
-
-RegisterAllComponents();
-
-window.App = new Vue({
+const router = createRouter({routes: Routes, history: createWebHistory()});
+window.App = createApp({
     template: "<Main />",
     router
-}).$mount("#app");
+});
+window.App.use(router);
+window.App.use(Store);
+
+RegisterAllComponents();

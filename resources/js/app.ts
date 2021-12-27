@@ -7,3 +7,8 @@
 
 // Bootstrap app
 require('./bootstrap');
+
+// Fetch CSRF token
+window.axios.get('/sanctum/csrf-cookie').then(response => {
+    window.App.mount("#app");
+});

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::post('/login', '\App\Http\Controllers\AuthController@login');
+
+Route::get('/{any}', function () {
     return view('welcome');
-});
+})->where('any', '.*');

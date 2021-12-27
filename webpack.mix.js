@@ -13,4 +13,5 @@ const mix = require('laravel-mix');
 
 mix.typeScript('resources/js/app.ts', 'public/js')
     .extract(['vue', 'lodash', 'axios', 'laravel-echo', 'bootstrap']).vue()
-    .sass('resources/css/app.scss', 'public/css');
+    .sass('resources/css/app.scss', 'public/css')
+    .copyDirectory('resources/img', 'public/img');

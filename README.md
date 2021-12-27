@@ -11,7 +11,11 @@ open-source and full customization.
 composer install
 npm install
 npm run dev
+php artisan migrate
 ```
+
+Copy `.env.example` to `.env` and fill in the MYSQL and Pusher variables.
+Or, if you're a pro - just set the appropriate environment variables.
 
 Use `php artisan serve` to start the backend. To work on the frontend,
 use `npm run watch`, which will watch the typescript as you write it.

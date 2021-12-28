@@ -22,12 +22,23 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $success = Auth::attempt(['email' => $request->get('email'),
+        $success = $this->auth->guard()->attempt(['email' => $request->get('email'),
             'password' => $request->get('password')]);
         if (!$success) {
-            return response(null, 403);
+            return response(null, 401);
         }
         $request->session()->regenerate();
+        return response(null, 204);
+    }
+
+    /**
+     * Logs the current user out
+     * @param Request $request
+     * @return Response
+     */
+    public function logout(Request $request)
+    {
+        $this->auth->guard()->logout();
         return response(null, 204);
     }
 }

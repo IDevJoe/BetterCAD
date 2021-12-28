@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {login, getCurrentUser} from "../api/User";
+import {login} from "../api/User";
 
 export default {
     name: "Login",
@@ -44,9 +44,7 @@ export default {
                     this.failMessage = true;
                     return;
                 }
-                getCurrentUser().then(e => {
-                    this.$store.commit('setUser', e);
-                });
+                this.$store.commit('setUser', e);
             });
         }
     }

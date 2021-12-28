@@ -26,3 +26,7 @@ export async function login(email: string, password: string): Promise<User|null>
     }
     return <User>(await getCurrentUser());
 }
+
+export async function logout(): Promise<void> {
+    await window.axios.post('/logout');
+}

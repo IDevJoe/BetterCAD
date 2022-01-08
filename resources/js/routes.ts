@@ -5,6 +5,8 @@ import AdminSettings from './pages/Admin/AdminSettings.vue';
 import AdminTemplate from "./pages/Admin/AdminTemplate.vue";
 import UserSettings from './pages/Admin/UserSettings.vue';
 import EditUser from './pages/Admin/User/EditUser.vue';
+import RoleSettings from './pages/Admin/RoleSettings.vue';
+import EditRole from './pages/Admin/Roles/EditRole.vue';
 
 export default [
     {
@@ -36,6 +38,16 @@ export default [
                 path: 'users/:uid',
                 name: 'admin.users.edit',
                 component: EditUser
+            },
+            {
+                path: 'roles',
+                name: 'admin.roles',
+                component: RoleSettings
+            },
+            {
+                path: 'roles/:rid',
+                name: 'admin.roles.edit',
+                component: EditRole
             }
         ]
     },

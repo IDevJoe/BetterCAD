@@ -20,6 +20,20 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(fun
         return $request->user();
     });
     Route::put('/settings/{setting}', 'SettingsController@putSetting')->middleware('can:modify standard settings');
-    Route::get('/users', 'UsersController@get')->middleware('can:modify users');
-    Route::get('/users/{user}', 'UsersController@getUser')->middleware('can:modify users');
+    Route::prefix('/users')->middleware('can:modify users')->group(function () {
+        Route::get('/', 'UsersController@get');
+        Route::get('/{user}', 'UsersController@getUser');
+        Route::patch('/{user}', 'UsersController@modify');
+        Route::put('/{user}/permissions', 'UsersController@assignPermission');
+        Route::delete('/{user}/permissions', 'UsersController@unassignPermission');
+    });
+    Route::prefix('/roles')->middleware('can:modify roles')->group(function () {
+        Route::get('/', 'RolesController@get');
+        Route::post('/', 'RolesController@create');
+        Route::get('/{role}', 'RolesController@getRole');
+        Route::patch('/{role}', 'RolesController@modify');
+        Route::delete('/{role}', 'RolesController@delete');
+        Route::put('/{role}/permissions', 'RolesController@assignPermission');
+        Route::delete('/{role}/permissions', 'RolesController@unassignPermission');
+    });
 });

@@ -48,10 +48,24 @@ export async function getUser(id: number): Promise<User> {
     return x.data;
 }
 
+export async function changeName(id: number, name: string): Promise<User> {
+    let x = await window.axios.patch('/api/users/' + encodeURIComponent(id), {name});
+    return x.data;
+}
+
+export async function changePerm(id: number, perm: string, enable: boolean): Promise<User> {
+    let x = await window.axios.request({
+        url: '/api/users/' + encodeURIComponent(id) + '/permissions',
+        data: {permission: perm},
+        method: (enable ? 'PUT' : 'DELETE')
+    });
+    return x.data;
+}
+
 export const AVAILABLE_PERMISSIONS = [
     "view admin panel",
     "modify standard settings",
-    "modify discord settings",
+    "modify roles",
     "modify users",
     "modify departments",
     "view audit logs",

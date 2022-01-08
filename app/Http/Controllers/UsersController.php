@@ -16,4 +16,32 @@ class UsersController extends Controller
     {
         return $user;
     }
+
+    public function modify(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'name' => 'required|string'
+        ]);
+        $user->name = $request->get('name');
+        $user->save();
+        return $user;
+    }
+
+    public function assignPermission(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'permission' => 'required|string'
+        ]);
+        $user->givePermissionTo($request->get('permission'));
+        return $user;
+    }
+
+    public function unassignPermission(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'permission' => 'required|string'
+        ]);
+        $user->revokePermissionTo($request->get('permission'));
+        return $user;
+    }
 }

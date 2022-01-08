@@ -21,7 +21,7 @@ class User extends Authenticatable
     public const AVAILABLE_PERMISSIONS = [
         "view admin panel",
         "modify standard settings",
-        "modify discord settings",
+        "modify roles",
         "modify users",
         "modify departments",
         "view audit logs",

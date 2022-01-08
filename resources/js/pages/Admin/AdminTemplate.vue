@@ -4,27 +4,27 @@
             <div class="col-md-3">
                 <ul class="nav flex-column nav-pills">
                     <li class="nav-item">
-                        <router-link to="/admin" :exact="true" active-class="active" class="nav-link">Dashboard</router-link>
+                        <router-link to="/admin/home" active-class="active" class="nav-link">Dashboard</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/settings" active-class="active" class="nav-link">Main Settings</router-link>
+                        <router-link to="/admin/settings" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify standard settings') !== -1">Main Settings</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/discord" active-class="active" class="nav-link">Discord</router-link>
+                        <router-link to="/admin/discord" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify discord settings') !== -1">Discord</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/users" active-class="active" class="nav-link">Users</router-link>
+                        <router-link to="/admin/users" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify users') !== -1">Users</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/departments" active-class="active" class="nav-link">Departments</router-link>
+                        <router-link to="/admin/departments" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify departments') !== -1">Departments</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/audit-log" active-class="active" class="nav-link">Audit Log</router-link>
+                        <router-link to="/admin/audit-log" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('view audit logs') !== -1">Audit Log</router-link>
                     </li>
                 </ul>
             </div>
             <div class="col-md">
-                <slot></slot>
+                <router-view />
             </div>
         </div>
 
@@ -33,7 +33,12 @@
 
 <script>
 export default {
-    name: "AdminTemplate"
+    name: "AdminTemplate",
+    computed: {
+        cuser() {
+            return this.$store.state.user;
+        }
+    }
 }
 </script>
 

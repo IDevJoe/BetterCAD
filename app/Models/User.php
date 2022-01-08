@@ -7,12 +7,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use HasPermissions;
+    use HasRoles;
+
+    public const AVAILABLE_PERMISSIONS = [
+        "view admin panel",
+        "modify standard settings",
+        "modify discord settings",
+        "modify users",
+        "modify departments",
+        "view audit logs",
+
+        "access dispatch dashboard",
+        "access leo dashboard",
+        "access civilian dashboard",
+        "lookup civilian records"
+    ];
+
+    protected $appends = ['effectivePermissions'];
 
     /**
      * The attributes that are mass assignable.
@@ -43,4 +63,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getEffectivePermissionsAttribute()
+    {
+        $perms = [];
+        foreach (self::AVAILABLE_PERMISSIONS as $perm) {
+            if ($this->hasPermissionTo($perm)) {
+                array_push($perms, $perm);
+            }
+        }
+        return $perms;
+    }
 }

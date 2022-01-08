@@ -15,7 +15,8 @@ declare global {
         axios: AxiosInstance,
         Pusher: Pusher,
         Echo: Echo,
-        App: App
+        App: App,
+        appVersion: string|undefined
     }
 }
 
@@ -48,6 +49,8 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true
 });
+
+window.appVersion = process.env.MIX_APP_VERSION;
 
 const router = createRouter({routes: Routes, history: createWebHistory()});
 window.App = createApp({

@@ -19,5 +19,7 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(fun
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::put('/settings/{setting}', 'SettingsController@putSetting');
+    Route::put('/settings/{setting}', 'SettingsController@putSetting')->middleware('can:modify standard settings');
+    Route::get('/users', 'UsersController@get')->middleware('can:modify users');
+    Route::get('/users/{user}', 'UsersController@getUser')->middleware('can:modify users');
 });

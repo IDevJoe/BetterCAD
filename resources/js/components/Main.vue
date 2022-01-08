@@ -23,21 +23,21 @@
                                 <router-link to="/" :exact="true" class="nav-link" active-class="active">Home</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/cad" class="nav-link" active-class="active">Dispatch</router-link>
+                                <router-link to="/cad" class="nav-link" active-class="active" v-if="cuser.effectivePermissions.indexOf('access dispatch dashboard') !== -1">Dispatch</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/mdt" class="nav-link" active-class="active">LEO</router-link>
+                                <router-link to="/mdt" class="nav-link" active-class="active" v-if="cuser.effectivePermissions.indexOf('access leo dashboard') !== -1">LEO</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/civ" class="nav-link" active-class="active">Civilian</router-link>
+                                <router-link to="/civ" class="nav-link" active-class="active" v-if="cuser.effectivePermissions.indexOf('access civilian dashboard') !== -1">Civilian</router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/records" class="nav-link" active-class="active">Records Lookup</router-link>
+                                <router-link to="/records" class="nav-link" active-class="active" v-if="cuser.effectivePermissions.indexOf('lookup civilian records') !== -1">Records Lookup</router-link>
                             </li>
                         </ul>
                         <div class="d-flex">
                             <ul class="navbar-nav mr-3">
-                                <li class="nav-item">
+                                <li class="nav-item" v-if="cuser.effectivePermissions.indexOf('view admin panel') !== -1">
                                     <router-link to="/admin" class="nav-link" active-class="active">
                                         <i class="fa-solid fa-gear mr-1"></i>
                                         Admin
@@ -57,9 +57,12 @@
             <!--
                 Support the project by not removing this footer.
             -->
-            <small><a href="https://github.com/IDevJoe/BetterCAD" target="_blank">BetterCAD</a> made with &hearts; by
+            <small class="text-center">
+                <a href="https://github.com/IDevJoe/BetterCAD" target="_blank">BetterCAD</a> made with &hearts; by
                 <a href="https://github.com/IDevJoe" target="_blank">IDevJoe</a>.
-                Licensed under <a href="https://github.com/IDevJoe/BetterCAD/blob/master/LICENSE.txt" target="_blank">GNUGPLv3</a>.</small>
+                Licensed under <a href="https://github.com/IDevJoe/BetterCAD/blob/master/LICENSE.txt" target="_blank">GNUGPLv3</a>.
+                <br />v.{{ version }} <span class="badge badge-secondary">indev</span>
+            </small>
         </div>
     </div>
 </template>
@@ -76,6 +79,14 @@ export default {
         loaded: false,
         logo: ""
     }),
+    computed: {
+        cuser() {
+            return this.$store.state.user;
+        },
+        version() {
+            return window.appVersion
+        }
+    },
     mounted() {
         getCurrentUser().then(e => {
             if(e != null) this.$store.commit('setUser', e);

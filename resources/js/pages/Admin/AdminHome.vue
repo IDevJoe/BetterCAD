@@ -1,7 +1,7 @@
 <template>
-    <AdminTemplate>
-        Administrative stats go here.
-    </AdminTemplate>
+    <div>
+        Admin stats go here.
+    </div>
 </template>
 
 <script>

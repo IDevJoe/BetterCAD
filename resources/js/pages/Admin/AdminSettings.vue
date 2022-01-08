@@ -1,5 +1,5 @@
 <template>
-    <AdminTemplate>
+    <div>
         <ul class="nav nav-tabs">
             <li class="nav-item" v-for="tab in tabs">
                 <router-link :to="{name: 'admin.settings', params: {group: tab}}" class="nav-link" active-class="active">{{ tab }}</router-link>
@@ -12,7 +12,7 @@
                 <SettingView v-for="setting in currentGroups[group]" :setting="setting" :key="setting.name" />
             </div>
         </div>
-    </AdminTemplate>
+    </div>
 </template>
 
 <script>

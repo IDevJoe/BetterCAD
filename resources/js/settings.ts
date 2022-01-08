@@ -11,10 +11,16 @@ export default {
         "User-related Settings": [
             {
                 name: "ALLOW_SELF_REGISTRATION",
-                "default": false,
                 type: "switch",
                 text: "Allow self registration",
-                description: "Allows users to self register. A set of default permissions will be automatically granted."
+                description: "Allows users to self register without approval. This is not secure when used by itself, and should be grouped with something like Discord login. A set of default permissions will be automatically granted."
+            },
+            {
+                name: "GLOBAL_REGISTRATION_CODE",
+                type: "password",
+                text: "Global Access Code",
+                description: "A global code to enable users to create an account",
+                hashed: true
             }
         ],
     },
@@ -30,19 +36,25 @@ export default {
                 name: "DISCORD_OAUTH_FORCE",
                 type: "switch",
                 text: "Force Discord Login",
-                description: "Only allows users to login/register through Discord login. For this to work properly, you should enable self registration."
+                description: "Only allows users to login/register through Discord login."
+            },
+            {
+                name: "DISCORD_SERVER_ID",
+                type: "text",
+                text: "Discord Server ID",
+                description: "If set, registration codes will be bypassed for users who are in this Discord server"
+            },
+            {
+                name: "DISCORD_SERVER_FORCE",
+                type: "switch",
+                text: "Users must be in Discord server",
+                description: "When enabled, the user's servers will be checked on every login. Users not currently in the server will be rejected."
             },
             {
                 name: "DISCORD_OAUTH_CLIENT_ID",
-                type: "text",
+                type: "static",
                 text: "Client ID",
-                description: "Client ID as found on discord.com/developers"
-            },
-            {
-                name: "DISCORD_OAUTH_CLIENT_SECRET",
-                type: "password",
-                text: "Client Secret",
-                description: "Client secret as found on discord.com/developers"
+                description: "Client ID as found on discord.com/developers. Due to security concerns, this must be set in the BetterCAD's .env file."
             }
         ],
         "Role Sync": [
@@ -60,5 +72,7 @@ export const defaults : {[key: string] : string} = {
     ALLOW_SELF_REGISTRATION: "false",
     DISCORD_OAUTH_ENABLED: "false",
     DISCORD_OAUTH_FORCE: "false",
-    DISCORD_ROLE_SYNC_ENABLED: "false"
+    DISCORD_ROLE_SYNC_ENABLED: "false",
+    DISCORD_SERVER_FORCE: "false",
+    BRAND_ICON_FILE: "/img/BetterCAD-433.png"
 }

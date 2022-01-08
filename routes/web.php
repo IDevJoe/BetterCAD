@@ -13,7 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', '\App\Http\Controllers\AuthController@login');
+Route::middleware('guest')->group(function () {
+    Route::post('/login', '\App\Http\Controllers\AuthController@login');
+    Route::get('/login/socialite/Discord', '\App\Http\Controllers\AuthController@socDiscRed');
+    Route::get('/login/socialite/Discord/continue', '\App\Http\Controllers\AuthController@socDiscRet');
+    Route::post('/login/ac', '\App\Http\Controllers\AuthController@signupCode')->name('login.accesscode');
+});
+
 Route::post('/logout', '\App\Http\Controllers\AuthController@logout');
 
 Route::get('/{any}', function () {

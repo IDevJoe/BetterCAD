@@ -3,21 +3,38 @@ import {defaults} from '../settings';
 
 let currentSettings : Setting[] = [];
 let initialized = false;
+let cinit: Promise<void>|null = null;
 
 async function init() {
     if(initialized) return;
     currentSettings = await getAllSettings();
+    console.log('Updated Settings', currentSettings);
+    window.Echo.listen('global', 'SettingsUpdate', async (e: {setting: Setting}) => {
+        console.log('Received live settings update', e);
+        let set: any = await getSetting(e.setting.name);
+        if(set == null) {
+            set = {};
+            currentSettings.push(set);
+        }
+        Object.assign(set, e.setting);
+        console.log('New settings', currentSettings);
+    });
     initialized = true;
 }
 
 export async function getSetting(name: string) : Promise<Setting|undefined> {
-    await init();
+    if(cinit == null) cinit = init();
+    await cinit;
     return currentSettings.find(e => e.name === name);
 }
 
-export async function getSettingValue(name: string) : Promise<string> {
+export async function getSettingValue(name: string) : Promise<string|boolean|null> {
     let server = await getSetting(name);
-    if(server !== undefined) return server.public_value;
+    if(server !== undefined) {
+        if(server.value === 'true') return true;
+        if(server.value === 'false') return false;
+        return server.value;
+    }
     return defaults[name];
 }
 
@@ -25,13 +42,12 @@ export async function setSetting(name: string, value: string, hashed: boolean = 
     let current = await getSetting(name);
     if(current === undefined) {
         current = {
+            id: -1,
             name,
-            public_value: "",
-            value_hashed: hashed,
-            created_at: "",
-            updated_at: ""
+            value: "",
+            hashed: hashed
         }
         currentSettings.push(current);
     }
-    current.public_value = await apiSetSetting(name, value, hashed);
+    current.value = await apiSetSetting(name, value, hashed);
 }

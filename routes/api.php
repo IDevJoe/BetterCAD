@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:sanctum')->group(function () {
+Route::get('/settings', '\App\Http\Controllers\SettingsController@getAllSettings');
+
+Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::put('/settings/{setting}', 'SettingsController@putSetting');
 });

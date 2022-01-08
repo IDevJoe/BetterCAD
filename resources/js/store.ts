@@ -1,5 +1,6 @@
 import {createStore} from "vuex";
 import User from "./api/User";
+import Setting from "./api/Setting";
 
 interface BetterCadState {
     user: User|null

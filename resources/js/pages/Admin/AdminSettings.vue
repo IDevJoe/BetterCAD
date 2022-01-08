@@ -9,7 +9,7 @@
             <div class="mb-5" v-for="group in currentGroupNames">
                 <strong>{{ group }}</strong>
                 <hr />
-                <SettingView v-for="setting in currentGroups[group]" :setting="setting" />
+                <SettingView v-for="setting in currentGroups[group]" :setting="setting" :key="setting.name" />
             </div>
         </div>
     </AdminTemplate>

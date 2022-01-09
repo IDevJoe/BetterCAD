@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(fun
         Route::patch('/{user}', 'UsersController@modify');
         Route::put('/{user}/permissions', 'UsersController@assignPermission');
         Route::delete('/{user}/permissions', 'UsersController@unassignPermission');
+        Route::put('/{user}/roles', 'UsersController@assignRole');
+        Route::delete('/{user}/roles', 'UsersController@unassignRole');
     });
     Route::prefix('/roles')->middleware('can:modify roles')->group(function () {
         Route::get('/', 'RolesController@get');
@@ -36,4 +38,5 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(fun
         Route::put('/{role}/permissions', 'RolesController@assignPermission');
         Route::delete('/{role}/permissions', 'RolesController@unassignPermission');
     });
+    Route::resource('characters', 'CharactersController')->middleware('can:access civilian dashboard');
 });

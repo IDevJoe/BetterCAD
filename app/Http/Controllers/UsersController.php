@@ -44,4 +44,22 @@ class UsersController extends Controller
         $user->revokePermissionTo($request->get('permission'));
         return $user;
     }
+
+    public function assignRole(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'role' => 'required|string'
+        ]);
+        $user->assignRole($request->get('role'));
+        return $user;
+    }
+
+    public function unassignRole(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'role' => 'required|string'
+        ]);
+        $user->removeRole($request->get('role'));
+        return $user;
+    }
 }

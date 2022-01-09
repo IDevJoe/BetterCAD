@@ -10,7 +10,9 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Facades\Socialite;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -49,7 +51,7 @@ class AuthController extends Controller
 
     public function socDiscRed()
     {
-        return Socialite::driver('discord')->scopes(['guilds'])->redirect();
+        return Socialite::driver('discord')->scopes(['guilds', 'guilds.members.read'])->redirect();
     }
 
     private static function createUser($scuser)
@@ -133,6 +135,35 @@ class AuthController extends Controller
         if (Setting::getValue("DISCORD_SERVER_FORCE", "false") == "true") {
             if (!$inguild) {
                 return view('error', ['error' => 'User is not in the Discord server.']);
+            }
+        }
+
+        // Sync Roles
+        if ($inguild && Setting::getValue("DISCORD_ROLE_SYNC_ENABLED", "false") == "true") {
+            $member = $client->get(
+                'https://discord.com/api/users/@me/guilds/' . urlencode($sid) . '/member',
+                [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $at
+                    ]
+                ]
+            );
+            $memberobj = json_decode($member->getBody()->getContents());
+            $dbroles = DB::select("SELECT * FROM `role_discord_ids`");
+            foreach ($dbroles as $crole) {
+                $remove = true;
+                foreach ($memberobj->roles as $drole) {
+                    if ($crole->discord_role_id == $drole) {
+                        if (!$uu->hasRole($crole->role_id)) {
+                            $uu->assignRole($crole->role_id);
+                        }
+                        $remove = false;
+                        break;
+                    }
+                }
+                if ($uu->hasRole($crole->role_id) && $remove) {
+                    $uu->removeRole($crole->role_id);
+                }
             }
         }
 

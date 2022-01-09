@@ -61,10 +61,13 @@
                 <div class="col-md-6">
                     <strong>Manually Assign Roles:</strong>
                     <div class="form-check" v-for="role in roles">
-                        <input class="form-check-input" type="checkbox" v-model="roleAssign[role.name]" :id="role.id">
+                        <input class="form-check-input" type="checkbox" v-model="roleAssign[role.name]" v-on:change="() => updateRole(role.name)" :id="role.id">
                         <label class="form-check-label" :for="role.id">
                             {{ role.name }}
                         </label>
+                    </div>
+                    <div v-if="roles.length === 0">
+                        No roles available to assign.
                     </div>
                 </div>
             </div>
@@ -73,7 +76,7 @@
 </template>
 
 <script>
-import {AVAILABLE_PERMISSIONS, getUser, changeName, changePerm} from "../../../api/User";
+import {AVAILABLE_PERMISSIONS, getUser, changeName, changePerm, changeRole} from "../../../api/User";
 import {getAllRoles} from "../../../api/Role";
 
 export default {
@@ -111,6 +114,9 @@ export default {
         });
         getAllRoles().then(e => {
             this.roles = e;
+            for(let role in this.roles) {
+                this.roleAssign[this.roles[role].name] = this.user.roles.find(e => e.name === this.roles[role].name) !== undefined;
+            }
         });
     },
     methods: {
@@ -118,6 +124,11 @@ export default {
             changePerm(this.$route.params.uid, perm, this.permAssign[perm]).then(e => {
                 this.user = e;
             }).catch(e => alert('Could not change permission ' + perm + ' for user.'));
+        },
+        updateRole(role) {
+            changeRole(this.$route.params.uid, role, this.roleAssign[role]).then(e => {
+                this.user = e;
+            }).catch(e => alert('Could not change role ' + perm + ' for user.'));
         },
         enablePerms() {
             let c = confirm("Are you sure you want to do this?");

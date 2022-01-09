@@ -62,6 +62,15 @@ export async function changePerm(id: number, perm: string, enable: boolean): Pro
     return x.data;
 }
 
+export async function changeRole(id: number, role: string, enable: boolean): Promise<User> {
+    let x = await window.axios.request({
+        url: '/api/users/' + encodeURIComponent(id) + '/roles',
+        data: {role},
+        method: (enable ? 'PUT' : 'DELETE')
+    });
+    return x.data;
+}
+
 export const AVAILABLE_PERMISSIONS = [
     "view admin panel",
     "modify standard settings",

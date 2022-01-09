@@ -33,6 +33,11 @@ export default {
         currentGroups() {
             return Settings[this.$route.params.group];
         }
+    },
+    mounted() {
+        if(this.$route.params.group == null) {
+            this.$router.push('./settings/' + Object.keys(Settings)[0]);
+        }
     }
 }
 </script>

@@ -74,4 +74,9 @@ class User extends Authenticatable
         }
         return $perms;
     }
+
+    public function characters()
+    {
+        return $this->hasMany('\App\Models\Character');
+    }
 }

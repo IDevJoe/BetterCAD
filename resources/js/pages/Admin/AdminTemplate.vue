@@ -7,13 +7,13 @@
                         <router-link to="/admin/home" active-class="active" class="nav-link">Dashboard</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/settings" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify standard settings') !== -1">Main Settings</router-link>
+                        <router-link :to="{name: 'admin.settings'}" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify standard settings') !== -1">Main Settings</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/admin/roles" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify roles') !== -1">Roles</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/admin/users" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify users') !== -1">Users</router-link>
+                        <router-link :to="{name: 'admin.users'}" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify users') !== -1">Users</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/admin/departments" active-class="active" class="nav-link" v-if="cuser.effectivePermissions.indexOf('modify departments') !== -1">Departments</router-link>

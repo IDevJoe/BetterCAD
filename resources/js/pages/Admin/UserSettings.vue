@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <router-view></router-view>
+    <div v-if="this.$route.params.uid == null">
         <h1>User Listing</h1>
         <table class="table table-sm mt-3">
             <thead>
@@ -30,9 +31,11 @@
 
 <script>
 import {getAllUsers} from "../../api/User";
+import EditUser from "./User/EditUser";
 
 export default {
     name: "UserSettings",
+    components: {EditUser},
     data() {
         return {
             users: null

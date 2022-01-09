@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <router-view></router-view>
+    <div v-if="$route.params.rid == null">
         <h1>All Roles</h1>
         <button class="btn btn-outline-info" v-on:click="newRole"><i class="fas fa-plus-circle mr-2"></i> New Role</button>
         <table class="table table-sm mt-4">

@@ -13,7 +13,7 @@ export default {
                 name: "ALLOW_SELF_REGISTRATION",
                 type: "switch",
                 text: "Allow self registration",
-                description: "Allows users to self register without approval. This is not secure when used by itself, and should be grouped with something like Discord login. A set of default permissions will be automatically granted."
+                description: "Allows users to self register using an access code. An admin will still need to grant permissions to the user."
             },
             {
                 name: "GLOBAL_REGISTRATION_CODE",
@@ -65,6 +65,66 @@ export default {
                 description: "Enables Discord role sync. Login must be enabled already."
             }
         ]
+    },
+    "10 Codes": {
+        "Duty Statuses": [
+            {
+                name: "LANG_10C_BEGIN_DUTY",
+                type: "text",
+                text: "Beginning of Duty"
+            },
+            {
+                name: "LANG_10C_END_DUTY",
+                type: "text",
+                text: "End of Duty"
+            }
+        ],
+        "Patrol Statuses": [
+            {
+                name: "LANG_10C_AVAIL",
+                type: "text",
+                text: "Available"
+            },
+            {
+                name: "LANG_10C_OFF_DUTY",
+                type: "text",
+                text: "Off Duty"
+            },
+            {
+                name: "LANG_10C_BUSY",
+                type: "text",
+                text: "Busy"
+            }
+        ],
+        "Call Statuses": [
+            {
+                name: "LANG_10C_ENROUTE",
+                type: "text",
+                text: "Enroute"
+            },
+            {
+                name: "LANG_10C_ON_SCENE",
+                type: "text",
+                text: "On Scene"
+            },
+            {
+                name: "LANG_10C_TRANSPORT",
+                type: "text",
+                text: "Transport"
+            }
+        ],
+        "Signals": [
+            {
+                name: "LANG_10C_EMERGENCY_TFC",
+                type: "text",
+                text: "Emergency Traffic Only"
+            },
+            {
+                name: "LANG_10C_STOP_TX",
+                type: "text",
+                text: "Stop Transmitting"
+            },
+        ]
     }
 }
 
@@ -74,5 +134,16 @@ export const defaults : {[key: string] : string} = {
     DISCORD_OAUTH_FORCE: "false",
     DISCORD_ROLE_SYNC_ENABLED: "false",
     DISCORD_SERVER_FORCE: "false",
-    BRAND_ICON_FILE: "/img/BetterCAD-433.png"
+    BRAND_ICON_FILE: "/img/BetterCAD-433.png",
+
+    LANG_10C_BEGIN_DUTY: "10-41",
+    LANG_10C_END_DUTY: "10-42",
+    LANG_10C_AVAIL: "10-8",
+    LANG_10C_OFF_DUTY: "10-7",
+    LANG_10C_BUSY: "10-6",
+    LANG_10C_ENROUTE: "10-97",
+    LANG_10C_ON_SCENE: "10-23",
+    LANG_10C_TRANSPORT: "10-15",
+    LANG_10C_EMERGENCY_TFC: "Signal 100",
+    LANG_10C_STOP_TX: "10-3"
 }

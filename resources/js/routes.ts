@@ -7,12 +7,26 @@ import UserSettings from './pages/Admin/UserSettings.vue';
 import EditUser from './pages/Admin/User/EditUser.vue';
 import RoleSettings from './pages/Admin/RoleSettings.vue';
 import EditRole from './pages/Admin/Roles/EditRole.vue';
+import CivilianDashboard from './pages/CivilianDashboard.vue';
+import EditCiv from './pages/Civ/EditCiv.vue';
 
 export default [
     {
         path: '/',
         name: 'home',
         component: Dashboard
+    },
+    {
+        path: '/civ',
+        name: 'civilian',
+        component: CivilianDashboard,
+        children: [
+            {
+                path: ':cid',
+                name: 'civilian.edit',
+                component: EditCiv
+            }
+        ]
     },
     {
         path: '/admin',
@@ -32,22 +46,26 @@ export default [
             {
                 path: 'users',
                 name: 'admin.users',
-                component: UserSettings
-            },
-            {
-                path: 'users/:uid',
-                name: 'admin.users.edit',
-                component: EditUser
+                component: UserSettings,
+                children: [
+                    {
+                        path: ':uid',
+                        name: 'admin.users.edit',
+                        component: EditUser
+                    }
+                ]
             },
             {
                 path: 'roles',
                 name: 'admin.roles',
-                component: RoleSettings
-            },
-            {
-                path: 'roles/:rid',
-                name: 'admin.roles.edit',
-                component: EditRole
+                component: RoleSettings,
+                children: [
+                    {
+                        path: ':rid',
+                        name: 'admin.roles.edit',
+                        component: EditRole
+                    }
+                ]
             }
         ]
     },

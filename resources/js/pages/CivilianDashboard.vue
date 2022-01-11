@@ -13,13 +13,12 @@
             </div>
             <div class="col-md-6">
                 <h1>Characters</h1>
-                <div class="card" v-for="character in characters">
+                <div class="card mb-2" v-for="character in characters">
                     <div class="card-body">
-                        <h5 class="card-title">{{ character.fname }} {{ character.lname }}</h5>
+                        <h5 class="card-title">{{ character.fname }} {{ character.lname }} <span class="badge badge-danger" v-if="character.dead">Dead</span></h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ character.dob }}</h6>
-                        <router-link :to="{name: 'civilian.edit', params: {cid: character.id}}" class="card-link">View/Edit</router-link>
+                        <router-link :to="{name: 'civilian.edit', params: {cid: character.id}}" class="card-link">Edit/Licenses</router-link>
                         <a href="#" class="card-link">Vehicles</a>
-                        <a href="#" class="card-link">Licenses</a>
                         <a href="#" class="card-link">Weapons</a>
                     </div>
                 </div>

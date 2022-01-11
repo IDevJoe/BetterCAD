@@ -33,7 +33,18 @@ class CharacterEditRequest extends FormRequest
             'gender' => 'required|string|max:1',
             'race' => 'required|string|max:1',
             'height' => 'required|integer',
-            'weight' => 'required|integer'
+            'weight' => 'required|integer',
+            'dl_type' => 'nullable|string|max:3',
+            'dl_status' => 'nullable|string|max:3',
+            'dl_expiry' => 'nullable|date',
+            'wl_status' => 'nullable|string|max:3',
+            'wl_expiry' => 'nullable|date',
+            'bl_status' => 'nullable|string|max:3',
+            'bl_expiry' => 'nullable|date',
+            'pl_type' => 'nullable|string|max:3',
+            'pl_status' => 'nullable|string|max:3',
+            'pl_expiry' => 'nullable|date',
+            'dead' => 'nullable|bool'
         ];
     }
 }

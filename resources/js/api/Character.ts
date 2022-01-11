@@ -1,4 +1,5 @@
 interface Character {
+    id: number,
     user_id: number,
     fname: string,
     lname: string,
@@ -25,5 +26,15 @@ export async function createCharacter(characterData: Character) {
 
 export async function getCharacter(id: number) {
     let res = await window.axios.get('/api/characters/' + encodeURIComponent(id));
+    return res.data;
+}
+
+export async function saveCharacter(id: number, characterData: Character) {
+    let res = await window.axios.patch('/api/characters/' + encodeURIComponent(id), characterData);
+    return res.data;
+}
+
+export async function deleteCharacter(id: number) {
+    let res = await window.axios.delete('/api/characters/' + encodeURIComponent(id));
     return res.data;
 }

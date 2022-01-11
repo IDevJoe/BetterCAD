@@ -26,6 +26,18 @@ class CreateCharactersTable extends Migration
             $table->string('race');
             $table->integer('height');
             $table->integer('weight');
+            $table->string('dl_type')->default('UNL');
+            $table->string('dl_status')->default('V');
+            $table->date('dl_expiry')->nullable();
+            $table->string('wl_status')->default('U');
+            $table->date('wl_expiry')->nullable();
+            $table->string('bl_status')->default('U');
+            $table->date('bl_expiry')->nullable();
+            $table->string('pl_type')->default('U');
+            $table->string('pl_status')->default('V');
+            $table->date('pl_expiry')->nullable();
+            $table->boolean('dead')->default(false);
+            $table->timestamp('dead_since')->nullable();
             $table->timestamps();
         });
     }

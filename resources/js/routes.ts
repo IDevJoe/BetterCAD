@@ -9,6 +9,7 @@ import RoleSettings from './pages/Admin/RoleSettings.vue';
 import EditRole from './pages/Admin/Roles/EditRole.vue';
 import CivilianDashboard from './pages/CivilianDashboard.vue';
 import EditCiv from './pages/Civ/EditCiv.vue';
+import VehicleList from './pages/Civ/VehicleList.vue';
 
 export default [
     {
@@ -24,6 +25,16 @@ export default [
             {
                 path: ':cid',
                 name: 'civilian.edit',
+                component: EditCiv,
+            },
+            {
+                path: ':cid/vehicles',
+                name: 'civilian.edit.vehicles',
+                component: VehicleList
+            },
+            {
+                path: ':cid/weapons',
+                name: 'civilian.edit.weapons',
                 component: EditCiv
             }
         ]

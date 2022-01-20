@@ -13,12 +13,12 @@
             </div>
             <div class="col-md-6">
                 <h1>Characters</h1>
-                <div class="card mb-2" v-for="character in characters">
+                <div class="card mb-2" v-for="character in this.$store.state.characters">
                     <div class="card-body">
                         <h5 class="card-title">{{ character.fname }} {{ character.lname }} <span class="badge badge-danger" v-if="character.dead">Dead</span></h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ character.dob }}</h6>
                         <router-link :to="{name: 'civilian.edit', params: {cid: character.id}}" class="card-link">Edit/Licenses</router-link>
-                        <a href="#" class="card-link">Vehicles</a>
+                        <router-link :to="{name: 'civilian.edit.vehicles', params: {cid: character.id}}" class="card-link">Vehicles</router-link>
                         <a href="#" class="card-link">Weapons</a>
                     </div>
                 </div>
@@ -35,20 +35,19 @@ export default {
     name: "CivilianDashboard",
     components: {CivForm},
     data: () => ({
-        characters: [],
-        characterEdit: null,
         newCharacter: {}
     }),
     mounted() {
-        getUserCharacters().then(e => {
-            this.characters = e;
-        });
+        if(this.$store.state.characters.length === 0)
+            getUserCharacters().then(e => {
+                this.$store.commit('setCharacters', e);
+            });
     },
     methods: {
         createCharacter(e) {
             e.preventDefault();
             createCharacter(this.newCharacter).then(e => {
-                this.characters.push(e);
+                this.$store.commit('addCharacter', e);
                 this.newCharacter = {};
             }).catch(e => {
                 if(e.response.status === 422) {

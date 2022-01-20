@@ -14,10 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/settings', '\App\Http\Controllers\SettingsController@getAllSettings');
+Route::get('/manifest', function () {
+    return \App\Models\Setting::getManifest();
+});
 
 Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
+    });
+    Route::get('/healthcheck', function(Request $request) {
+        return response(null, 204);
     });
     Route::put('/settings/{setting}', 'SettingsController@putSetting')->middleware('can:modify standard settings');
     Route::prefix('/users')->middleware('can:modify users')->group(function () {
@@ -38,5 +44,12 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(fun
         Route::put('/{role}/permissions', 'RolesController@assignPermission');
         Route::delete('/{role}/permissions', 'RolesController@unassignPermission');
     });
-    Route::resource('characters', 'CharactersController')->middleware('can:access civilian dashboard');
+    Route::middleware('can:access civilian dashboard')->group(function () {
+        Route::resource('characters', 'CharactersController');
+        Route::post('/characters/{character}/vehicles', 'VehiclesController@store');
+        Route::patch('/vehicles/{vehicle}', 'VehiclesController@update');
+    });
+    Route::prefix('/lookup')->middleware('can:lookup civilian records')->group(function () {
+        Route::get('/person', 'RecordsController@lookupPerson');
+    });
 });

@@ -1,7 +1,10 @@
 <template>
     <div v-if="civilian != null">
-        <h1>Edit Character <span class="badge badge-danger" v-if="civilian.dead">Dead</span></h1>
-        <div class="row">
+        <router-link to="/civ" class="btn btn-outline-info btn-sm">Back to all characters</router-link>
+        <router-link :to="{name: 'civilian.edit.vehicles', params: {cid: civilian.id}}" class="btn btn-outline-info btn-sm ml-1">Vehicles</router-link>
+        <router-link :to="{name: 'civilian.edit.weapons', params: {cid: civilian.id}}" class="btn btn-outline-info btn-sm ml-1">Weapons</router-link>
+        <h1 class="mt-3">Edit Character <span class="badge badge-danger" v-if="civilian.dead">Dead</span></h1>
+        <div class="row mt-3">
             <div class="col-md-6">
                 <form v-on:submit="cancel">
                     <CivForm :mod="this.civilian" :editmode="true" />
@@ -116,16 +119,21 @@ export default {
         civilian: null
     }),
     mounted() {
-        getCharacter(this.$route.params.cid).then(e => {
-            this.civilian = e;
-        })
+        let char = this.$store.state.characters.find(e => e.id + "" === this.$route.params.cid);
+        if(char == null)
+            getCharacter(this.$route.params.cid).then(e => {
+                this.civilian = e;
+            })
+        else this.civilian = char;
     },
     methods: {
         saveCharacter() {
             saveCharacter(this.$route.params.cid, this.civilian).then(e => {
                 this.civilian = e;
+                this.$store.commit('modifyCharacter', e);
             }).catch(e => {
                 alert("Character could not be saved.");
+                console.error(e);
             });
         },
         kill() {
@@ -139,9 +147,11 @@ export default {
         deleteChar() {
             if(!confirm("Really delete this character?")) return;
             deleteCharacter(this.$route.params.cid).then(e => {
+                this.$store.commit('deleteCharacter', this.civilian);
                 this.$router.push('/civ');
             }).catch(e => {
                 alert('Character could not be deleted.');
+                console.error(e);
             });
         }
     }

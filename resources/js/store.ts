@@ -25,6 +25,18 @@ export default createStore<BetterCadState>({
         modifyCharacter(state: BetterCadState, character: Character) {
             let char = state.characters.find(e => e.id === character.id);
             Object.assign(char, character);
+        },
+        addCharacter(state: BetterCadState, character: Character) {
+            state.characters.push(character);
+        },
+        deleteCharacter(state: BetterCadState, character: Character) {
+            let ch2 = state.characters.find(e => e.id === character.id);
+            if(ch2 === undefined) {
+                console.error("Character not found.", character, state.characters);
+                return;
+            }
+            let ind = state.characters.indexOf(ch2);
+            state.characters.splice(ind, 1);
         }
     }
 });

@@ -69,7 +69,7 @@
 
 <script>
 import Login from "../pages/Login";
-import {getCurrentUser, logout as logoutUser} from "../api/User";
+import {getCurrentUser, logout as logoutUser, healthcheck} from "../api/User";
 import {getSettingValue} from "../managers/SettingsManager";
 
 export default {
@@ -98,7 +98,7 @@ export default {
         });
         setInterval(() => {
             if(this.$store.state.user == null) return;
-            getCurrentUser().then(e => {
+            healthcheck().then(e => {
 
             }).catch(e => {
                 this.$store.commit('setUser', null);

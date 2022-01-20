@@ -3,7 +3,36 @@ import {defaults} from '../settings';
 
 let currentSettings : Setting[] = [];
 let initialized = false;
+let manInitialized = false;
 let cinit: Promise<void>|null = null;
+let minit: Promise<void>|null = null;
+let manifest = {};
+
+async function dlManifest() {
+    if(manInitialized) return;
+    // Get manifest
+    let man = await getSettingValue('MANIFEST');
+    if(man == null) {
+        let manreq = await window.axios.get('/api/manifest');
+        manifest = manreq.data;
+    } else {
+        try {
+            manifest = JSON.parse(<string>man);
+        } catch(e) {
+            let manreq = await window.axios.get('/api/manifest');
+            manifest = manreq.data;
+            console.error("Manifest decode failed.");
+        }
+    }
+    console.log("Manifest updated", manifest);
+    manInitialized = true;
+}
+
+export async function getManifest() {
+    if(minit == null) minit = dlManifest();
+    await minit;
+    return manifest;
+}
 
 async function init() {
     if(initialized) return;
@@ -20,6 +49,7 @@ async function init() {
         console.log('New settings', currentSettings);
     });
     initialized = true;
+    if(minit == null) minit = dlManifest();
 }
 
 export async function getSetting(name: string) : Promise<Setting|undefined> {

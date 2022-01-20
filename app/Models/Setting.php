@@ -29,4 +29,20 @@ class Setting extends Model
         }
         return $s->value;
     }
+
+    public static function getValueObject($setting, $default = null)
+    {
+        $set = self::getValue($setting);
+        $dec = base64_decode($set);
+        $obj = json_decode($dec);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return $obj;
+        }
+        return $default;
+    }
+
+    public static function getManifest()
+    {
+        return self::getValueObject('MANIFEST', json_decode(file_get_contents(base_path('defaultmanifest.json'))));
+    }
 }

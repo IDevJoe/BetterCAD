@@ -71,6 +71,10 @@ export async function changeRole(id: number, role: string, enable: boolean): Pro
     return x.data;
 }
 
+export async function healthcheck() {
+    await window.axios.get('/api/healthcheck');
+}
+
 export const AVAILABLE_PERMISSIONS = [
     "view admin panel",
     "modify standard settings",

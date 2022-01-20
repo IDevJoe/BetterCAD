@@ -98,15 +98,15 @@ class CharactersController extends Controller
         $character->address = $request->get('address');
         $character->height = $request->get('height');
         $character->weight = $request->get('weight');
-        $character->dl_type = $request->get('dl_type');
-        $character->dl_status = $request->get('dl_status');
+        $character->dl_type = $request->get('dl_type', 'UNL');
+        $character->dl_status = $request->get('dl_status', 'V');
         $character->dl_expiry = $request->get('dl_expiry');
-        $character->wl_status = $request->get('wl_status');
+        $character->wl_status = $request->get('wl_status', 'U');
         $character->wl_expiry = $request->get('wl_expiry');
-        $character->bl_status = $request->get('bl_status');
+        $character->bl_status = $request->get('bl_status', 'U');
         $character->bl_expiry = $request->get('bl_expiry');
-        $character->pl_type = $request->get('pl_type');
-        $character->pl_status = $request->get('pl_status');
+        $character->pl_type = $request->get('pl_type', 'U');
+        $character->pl_status = $request->get('pl_status', 'V');
         $character->pl_expiry = $request->get('pl_expiry');
         if (!$character->dead && $request->get('dead')) {
             $character->dead = true;
@@ -120,12 +120,12 @@ class CharactersController extends Controller
         }
         if ($character->wl_status == "U") {
             $character->wl_expiry = null;
-        } elseif ($character->dl_expiry == null) {
+        } elseif ($character->wl_expiry == null) {
             $character->wl_expiry = Carbon::now()->addYears(2)->toDateString();
         }
         if ($character->bl_status == "U") {
             $character->bl_expiry = null;
-        } elseif ($character->dl_expiry == null) {
+        } elseif ($character->bl_expiry == null) {
             $character->bl_expiry = Carbon::now()->addYears(2)->toDateString();
         }
         if ($character->pl_type == "U") {
@@ -144,8 +144,12 @@ class CharactersController extends Controller
      * @param  \App\Models\Character  $character
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Character $character)
+    public function destroy(Request $request, Character $character)
     {
-        //
+        if ($character->user_id != $request->user()->id) {
+            throw new UnauthorizedHttpException();
+        }
+        $character->delete();
+        return response(null, 204);
     }
 }

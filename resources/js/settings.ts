@@ -23,6 +23,19 @@ export default {
                 hashed: true
             }
         ],
+        "Manifest": [
+            {
+                name: "MANIFEST",
+                type: "file",
+                text: "Custom Manifest Upload",
+                description: "A manifest includes additional features, such as address autocompletion. It also includes several lists (like vehicles) to be used for forms. See the wiki on details on how to edit this file."
+            }, {
+                name: "CIV_VEH_MAKE_MODEL_USE_MANIFEST",
+                type: "switch",
+                text: "Use vehicles from the manifest",
+                description: "Disables user-supplied vehicle make/models and replaces it with a dropdown with values from the manifest"
+            }
+        ]
     },
     "Discord": {
         "Login": [
@@ -135,6 +148,7 @@ export const defaults : {[key: string] : string} = {
     DISCORD_ROLE_SYNC_ENABLED: "false",
     DISCORD_SERVER_FORCE: "false",
     BRAND_ICON_FILE: "/img/BetterCAD-433.png",
+    CIV_VEH_MAKE_MODEL_USE_MANIFEST: "false",
 
     LANG_10C_BEGIN_DUTY: "10-41",
     LANG_10C_END_DUTY: "10-42",

@@ -1,0 +1,11 @@
+{
+    "states": [
+        "Los Santos",
+        "San Andreas"
+    ],
+    "vehicle_models": {
+        "Tesla": [
+            "Model 3"
+        ]
+    }
+}

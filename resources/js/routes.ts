@@ -10,6 +10,7 @@ import EditRole from './pages/Admin/Roles/EditRole.vue';
 import CivilianDashboard from './pages/CivilianDashboard.vue';
 import EditCiv from './pages/Civ/EditCiv.vue';
 import VehicleList from './pages/Civ/VehicleList.vue';
+import RecordsLookup from './pages/RecordsLookup.vue';
 
 export default [
     {
@@ -38,6 +39,11 @@ export default [
                 component: EditCiv
             }
         ]
+    },
+    {
+        path: '/records',
+        name: 'records',
+        component: RecordsLookup
     },
     {
         path: '/admin',

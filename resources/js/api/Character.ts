@@ -61,3 +61,15 @@ export async function updateVehicle(vehicleData: Vehicle) {
     let res = await window.axios.patch('/api/vehicles/' + encodeURIComponent(vehicleData.id), vehicleData);
     return res.data;
 }
+
+export async function lookupPerson(data: any) {
+    let query: string|null = null;
+    Object.keys(data).forEach(key => {
+        if(data[key] == "") return;
+        if(query == null) query = "?" + key + "=" + encodeURIComponent(data[key]);
+        else query += "&" + key + "=" + encodeURIComponent(data[key]);
+    });
+    if(query == null) query = "";
+    let res = await window.axios.get('/api/lookup/person' + query);
+    return res.data;
+}

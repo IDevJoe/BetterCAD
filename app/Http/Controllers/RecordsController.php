@@ -19,13 +19,21 @@ class RecordsController extends Controller
     public function lookupPerson(Request $request)
     {
         $this->validate($request, [
-            'fname' => 'required|string|max:100',
-            'lname' => 'required|string|max:100',
-            'dob' => 'required|date'
+            'fname' => 'nullable|string|max:100',
+            'lname' => 'nullable|string|max:100',
+            'dob' => 'nullable|date'
         ]);
-        $cs = Character::whereRaw('UPPER(lname) LIKE ?', strtoupper($request->get('lname')))
-            ->where('dob', $request->get('dob'))
-            ->whereRaw('UPPER(fname) LIKE ?', strtoupper($request->get('fname')))->get();
+        $cs = Character::where('id', '>', 0);
+        if ($request->has('fname')) {
+            $cs = $cs->whereRaw('UPPER(fname) LIKE ?', strtoupper($request->get('fname')));
+        }
+        if ($request->has('lname')) {
+            $cs = $cs->whereRaw('UPPER(lname) LIKE ?', strtoupper($request->get('lname')));
+        }
+        if ($request->has('dob')) {
+            $cs = $cs->where('dob', $request->get('dob'));
+        }
+        $cs = $cs->limit(10)->get();
         $question = $request->get('lname') . ",\t" . $request->get('fname') . "\t" . $request->get('dob');
         $answer = "";
         $i = 0;

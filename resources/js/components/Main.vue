@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="container mt-5 mb-5">
+            <div :class="'mt-5 mb-5' + (this.$store.state.fluidContainer ? ' container-fluid' : ' container')">
                 <router-view></router-view>
             </div>
         </div>

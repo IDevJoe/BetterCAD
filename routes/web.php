@@ -25,3 +25,5 @@ Route::post('/logout', '\App\Http\Controllers\AuthController@logout');
 Route::get('/{any}', function () {
     return view('welcome');
 })->where('any', '.*');
+
+\Illuminate\Support\Facades\Broadcast::routes();

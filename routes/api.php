@@ -17,6 +17,7 @@ Route::get('/settings', '\App\Http\Controllers\SettingsController@getAllSettings
 Route::get('/manifest', function () {
     return \App\Models\Setting::getManifest();
 });
+Route::post('/pusher-wh', '\App\Http\Controllers\PusherController@webhookIntake');
 
 Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -51,5 +52,10 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers')->group(fun
     });
     Route::prefix('/lookup')->middleware('can:lookup civilian records')->group(function () {
         Route::get('/person', 'RecordsController@lookupPerson');
+    });
+    Route::prefix('/cad')->middleware('can:access dispatch dashboard')->group(function () {
+        Route::get('/state', 'CadController@cadState');
+        Route::patch('/identifier', 'CadController@changeIdentifier');
+        Route::patch('/status', 'CadController@setStatus');
     });
 });

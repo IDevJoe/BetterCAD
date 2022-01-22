@@ -35,19 +35,19 @@ class Vehicle extends Model
         if ($this->registration_status != "V") {
             switch ($this->registration_status) {
                 case "E":
-                    $alerts .= "!! REGISTRATION EXPIRED";
+                    $alerts .= "!! REGISTRATION EXPIRED\n";
                     break;
                 case "S":
-                    $alerts .= "!! REGISTRATION SUSPENDED";
+                    $alerts .= "!! REGISTRATION SUSPENDED\n";
                     break;
                 case "C":
-                    $alerts .= "!! REGISTRATION CANCELLED";
+                    $alerts .= "!! REGISTRATION CANCELLED\n";
                     break;
                 case "WA":
-                    $alerts .= "!! VEHICLE WANTED *********";
+                    $alerts .= "!! VEHICLE WANTED *********\n";
                     break;
                 case "ST":
-                    $alerts .= "!! VEHICLE STOLEN *********";
+                    $alerts .= "!! VEHICLE STOLEN *********\n";
                     break;
             }
         }

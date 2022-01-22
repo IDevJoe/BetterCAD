@@ -5,14 +5,16 @@ import Setting from "./api/Setting";
 
 interface BetterCadState {
     user: User|null,
-    characters: Character[]
+    characters: Character[],
+    fluidContainer: boolean
 }
 
 export default createStore<BetterCadState>({
     state() {
         return {
             user: null,
-            characters: []
+            characters: [],
+            fluidContainer: false
         }
     },
     mutations: {
@@ -37,6 +39,9 @@ export default createStore<BetterCadState>({
             }
             let ind = state.characters.indexOf(ch2);
             state.characters.splice(ind, 1);
+        },
+        setFluidContainer(state: BetterCadState, fluid: boolean) {
+            state.fluidContainer = fluid;
         }
     }
 });

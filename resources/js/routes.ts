@@ -11,12 +11,24 @@ import CivilianDashboard from './pages/CivilianDashboard.vue';
 import EditCiv from './pages/Civ/EditCiv.vue';
 import VehicleList from './pages/Civ/VehicleList.vue';
 import RecordsLookup from './pages/RecordsLookup.vue';
+import DispatchPanel from './pages/DispatchPanel.vue';
+import LeoPanel from './pages/LeoPanel.vue';
 
 export default [
     {
         path: '/',
         name: 'home',
         component: Dashboard
+    },
+    {
+        path: '/cad',
+        name: 'cad',
+        component: DispatchPanel
+    },
+    {
+        path: '/mdt',
+        name: 'mdt',
+        component: LeoPanel
     },
     {
         path: '/civ',

@@ -35,6 +35,14 @@ export default {
                 text: "Use vehicles from the manifest",
                 description: "Disables user-supplied vehicle make/models and replaces it with a dropdown with values from the manifest"
             }
+        ],
+        "Mapping": [
+            {
+                name: "LIVE_MAP_FILE",
+                type: "file",
+                text: "Livemap Image File",
+                description: "A 4096x4096 image file to be used for the livemap image"
+            }
         ]
     },
     "Discord": {

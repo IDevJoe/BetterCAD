@@ -32,6 +32,11 @@ class User extends Authenticatable
         "lookup civilian records"
     ];
 
+    public const SOCKET_DISCONNECTED = -1;
+    public const SOCKET_UNKNOWN = 0;
+    public const SOCKET_CAD = 1;
+    public const SOCKET_MDT = 2;
+
     protected $appends = ['effectivePermissions'];
 
     /**
@@ -43,6 +48,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'current_identifier',
+        'current_status',
+        'socket_connected'
     ];
 
     /**

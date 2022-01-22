@@ -9,6 +9,8 @@ import Store from './store';
 
 import {LoDashStatic} from 'lodash';
 
+require('@forevolve/bootstrap-dark/dist/js/bootstrap.min');
+
 declare global {
     interface Window {
         _: LoDashStatic,

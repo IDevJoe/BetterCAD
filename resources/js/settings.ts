@@ -149,14 +149,14 @@ export default {
     }
 }
 
-export const defaults : {[key: string] : string} = {
-    ALLOW_SELF_REGISTRATION: "false",
-    DISCORD_OAUTH_ENABLED: "false",
-    DISCORD_OAUTH_FORCE: "false",
-    DISCORD_ROLE_SYNC_ENABLED: "false",
-    DISCORD_SERVER_FORCE: "false",
+export const defaults : {[key: string] : string|boolean} = {
+    ALLOW_SELF_REGISTRATION: false,
+    DISCORD_OAUTH_ENABLED: false,
+    DISCORD_OAUTH_FORCE: false,
+    DISCORD_ROLE_SYNC_ENABLED: false,
+    DISCORD_SERVER_FORCE: false,
     BRAND_ICON_FILE: "/img/BetterCAD-433.png",
-    CIV_VEH_MAKE_MODEL_USE_MANIFEST: "false",
+    CIV_VEH_MAKE_MODEL_USE_MANIFEST: false,
 
     LANG_10C_BEGIN_DUTY: "10-41",
     LANG_10C_END_DUTY: "10-42",

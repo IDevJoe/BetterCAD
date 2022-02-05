@@ -78,7 +78,6 @@ export default {
         }
     },
     mounted() {
-        this.$store.commit('setFluidContainer', true);
         channel = window.Echo.join('cad-live');
         channel.listen('CallCreated', (c) => {
 
@@ -115,6 +114,7 @@ export default {
                 this.displayMap = false;
                 return;
             }
+            this.$store.commit('setFluidContainer', true);
             map = L.map('map', {
                 crs: L.CRS.Simple,
                 minZoom: -1.7,
@@ -141,7 +141,8 @@ export default {
         });
     },
     beforeUnmount() {
-        map.remove();
+        if(map != null)
+            map.remove();
         this.$store.commit('setFluidContainer', false);
         channel.stopListening('CallCreated');
         channel.stopListening('CallUpdated');
